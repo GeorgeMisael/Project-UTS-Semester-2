@@ -1,0 +1,5 @@
+<tbody>
+
+{{ $slot }}
+
+</tbody>
