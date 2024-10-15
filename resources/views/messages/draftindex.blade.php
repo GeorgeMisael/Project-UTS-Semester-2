@@ -19,10 +19,10 @@
                             </div>
                             <div class="btn-group" role="group" aria-label="Message Actions">
                                 <div class="">
-                                    <button href="{{ route('messages.show', $message->message_id) }}" class="btn btn-outline-info btn-sm">View</button>
+                                    <a href="{{ route('messages.show', $message->message_id) }}" class="btn btn-outline-info btn-sm">View</a>
                                 </div>
                                 <div>
-                                    <button href="{{ route('messages.edit_draft', $message->message_id) }}" class="ml-1 btn btn-outline-warning btn-sm">Edit</button>
+                                    <a href="{{ route('messages.edit_draft', $message->message_id) }}" class="ml-1 btn btn-outline-warning btn-sm">Edit</a>
                                 </div>
                                 <form action="{{ route('messages.publish', $message->message_id) }}" method="POST" class="d-inline">
                                     @csrf
