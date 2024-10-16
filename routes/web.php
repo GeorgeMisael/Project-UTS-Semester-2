@@ -4,9 +4,7 @@ use App\Http\Controllers;
 use Illuminate\Support\Facades\Route;
 use App\Http\Middleware\RoleMiddleware;
 use App\Http\Middleware\AdminMiddleware;
-use App\Http\Controllers\MessageController;
 use App\Http\Middleware\SuperAdminMiddleware;
-
 
 // Register
 Route::get('/register', [Controllers\AuthController::class, 'index']);
@@ -61,20 +59,20 @@ Route::middleware('auth')->group(function(){
 });
 
 Route::prefix('messages')->middleware('auth')->group(function () {
-    Route::get('/', [MessageController::class, 'index'])->name('messages.index');
-    Route::post('/send', [MessageController::class, 'store'])->name('messages.send');
-    Route::get('/create', [MessageController::class, 'create'])->name('messages.create');
+    Route::get('/', [Controllers\MessageController::class, 'index'])->name('messages.index');
+    Route::post('/send', [Controllers\MessageController::class, 'store'])->name('messages.send');
+    Route::get('/create', [Controllers\MessageController::class, 'create'])->name('messages.create');
 
-    Route::get('/{message}', [MessageController::class, 'show'])->name('messages.show');
-    Route::post('/{message_id}/publish', [MessageController::class, 'publish'])->name('messages.publish');
+    Route::get('/{message}', [Controllers\MessageController::class, 'show'])->name('messages.show');
+    Route::post('/{message_id}/publish', [Controllers\MessageController::class, 'publish'])->name('messages.publish');
      // Pastikan ini ada
-    Route::get('/{message}/edit', [MessageController::class, 'edit'])->name('messages.edit');
-    Route::put('/{message}', [MessageController::class, 'update'])->name('messages.update');
-    Route::delete('/{message}', [MessageController::class, 'destroy'])->name('messages.destroy');
-    Route::get('/{message_id}/edit_draft', [MessageController::class, 'editDraft'])->name('messages.edit_draft');
-    Route::put('/{message_id}/update_draft', [MessageController::class, 'updateDraft'])->name('messages.update_draft');
+    Route::get('/{message}/edit', [Controllers\MessageController::class, 'edit'])->name('messages.edit');
+    Route::put('/{message}', [Controllers\MessageController::class, 'update'])->name('messages.update');
+    Route::delete('/{message}', [Controllers\MessageController::class, 'destroy'])->name('messages.destroy');
+    Route::get('/{message_id}/edit_draft', [Controllers\MessageController::class, 'editDraft'])->name('messages.edit_draft');
+    Route::put('/{message_id}/update_draft', [Controllers\MessageController::class, 'updateDraft'])->name('messages.update_draft');
 });
-Route::get('/email/sent', [MessageController::class, 'sent'])->name('messages.sent');
-Route::get('email/draft', [MessageController::class, 'indexDraft'])->name('messages.draft');
-Route::get('/download/document/{file}', [MessageController::class, 'downloadDocument'])->name('download.document')->middleware('auth');
+Route::get('/email/sent', [Controllers\MessageController::class, 'sent'])->name('messages.sent');
+Route::get('email/draft', [Controllers\MessageController::class, 'indexDraft'])->name('messages.draft');
+Route::get('/download/document/{file}', [Controllers\MessageController::class, 'downloadDocument'])->name('download.document')->middleware('auth');
 
