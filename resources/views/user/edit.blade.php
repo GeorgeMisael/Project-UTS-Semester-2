@@ -4,7 +4,6 @@
 
   <div class="card-body">
     <h4 class="card-title">Edit Users</h4>
-
     <!-- Pastikan action mengarah ke route yang benar dan metode adalah PATCH -->
     <form action="{{ route('users.update', $users->id) }}" method="post" class="forms-sample">
       @csrf

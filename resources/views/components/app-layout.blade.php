@@ -13,7 +13,7 @@
     <link rel="stylesheet" href="{{ asset('skydash-free/dist') }}/assets/vendors/mdi/css/materialdesignicons.min.css">
     <!-- endinject -->
     <!-- Plugin css for this page -->
-    <!-- <link rel="stylesheet" href="assets/vendors/datatables.net-bs4/dataTables.bootstrap4.css"> -->
+    {{-- <link rel="stylesheet" href="{{ asset('skydash-free/dist') }}/assets/vendors/datatables.net-bs4/dataTables.bootstrap4.css"> --}}
     <link rel="stylesheet" href="{{ asset('skydash-free/dist') }}/assets/vendors/datatables.net-bs5/dataTables.bootstrap5.css">
     <link rel="stylesheet" href="{{ asset('skydash-free/dist') }}/assets/vendors/ti-icons/css/themify-icons.css">
     <link rel="stylesheet" type="text/css" href="{{ asset('skydash-free/dist') }}/assets/js/select.dataTables.min.css">
@@ -22,8 +22,24 @@
     <link rel="stylesheet" href="{{ asset('skydash-free/dist') }}/assets/css/style.css">
     <!-- endinject -->
     <link rel="shortcut icon" href="{{ asset('skydash-free/dist') }}/assets/images/favicon.png" />
+
+    {{-- HTML2PDF --}}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.min.js"></script>
+
+    {{-- Jquery --}}
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" href="https://cdn.datatables.net/2.1.8/css/dataTables.dataTables.min.css">
+    <script src="https://cdn.datatables.net/2.1.8/js/dataTables.min.js"></script>
+
+    <!-- Highcharts library -->
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+    <script src="https://code.highcharts.com/modules/export-data.js"></script>
+    <script src="https://code.highcharts.com/modules/accessibility.js"></script>
   </head>
-  <body>
+
+<body>
     <div class="container-scroller">
 
 <!-- partial:partials/_navbar.html -->
@@ -53,6 +69,7 @@
         </div>
       </header>
     @endisset
+    
     <div class="card">
   
       {{ $slot }}
@@ -126,12 +143,34 @@
                 }
             });
         }
-
+        
         // Panggil fungsi loadEarthquakes ketika halaman selesai dimuat
         loadEarthquakes();
-    });
+      });
+      </script>
 
+    <script>
+      let  table= new DataTable('#myTable');
     </script>
+    
+    {{-- datatable --}}
+    <script>
+      $(document).ready(function() {
+        // Inisialisasi DataTables dengan pengaturan gaya agar tetap memakai SkyDash UI
+        $('#myTable').DataTable({
+          paging: true,
+          searching: true,
+          ordering: true,
+          info: true,
+          dom: 'Bfrtip',
+          buttons: ['copy', 'csv', 'excel', 'pdf', 'print'],
+          // Tambahkan opsi berikut untuk menonaktifkan gaya DataTables
+          "autoWidth": false, // Hapus Auto Width jika bentrok dengan gaya SkyDash
+          "bInfo": false, // Hilangkan elemen info jika ingin SkyDash info
+        });
+      });
+    </script>
+
 
   </body>
 </html>

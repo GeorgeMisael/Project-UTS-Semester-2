@@ -1,8 +1,9 @@
 <?php
 
+use App\Models\User;
 use App\Http\Controllers;
+use App\Models\JenisUser;
 use Illuminate\Support\Facades\Route;
-use App\Http\Middleware\RoleMiddleware;
 use App\Http\Middleware\AdminMiddleware;
 use App\Http\Middleware\SuperAdminMiddleware;
 
@@ -14,14 +15,13 @@ Route::post('/register/submit', [Controllers\AuthController::class, 'registerSto
 Route::get('/', Controllers\AuthController::class)->name('login');
 Route::post('/', [Controllers\AuthController::class, 'authenticate'])->name('authenticate');
 
-//Logout
+// Logout
 Route::post('/logout', [Controllers\AuthController::class, 'logout'])->name('logout');
 
 Route::middleware('auth')->group(function(){
 
   // Dashboard
   Route::get('/dashboard', [Controllers\DashboardController::class, 'index']);
-
 
   Route::middleware(AdminMiddleware::class)->group(function(){
     //Jenis User
@@ -39,7 +39,6 @@ Route::middleware('auth')->group(function(){
     Route::patch('/user/{id}', [Controllers\UserController::class, 'update'])->name('users.update');
     Route::delete('/user/{id}', [Controllers\UserController::class, 'destroy'])->name('users.destroy');
     Route::post('/user/{id}/reset', [Controllers\UserController::class, 'reset'])->name('users.reset');
-
   });
 
   Route::middleware(SuperAdminMiddleware::class)->group(function(){
@@ -52,6 +51,21 @@ Route::middleware('auth')->group(function(){
     Route::delete('/menu/{id}', [Controllers\MenuController::class,'destroy'])->name('menu.destroy');
   });
 
+  //Category
+  Route::get('/category', [Controllers\CategoryController::class, 'index'])->name('category.index');
+  Route::get('/category/create', [Controllers\CategoryController::class, 'create'])->name('category.create');
+  Route::post('/category/store', [Controllers\CategoryController::class,'store'])->name('category.store');
+  Route::post('/category/edit/{id}', [Controllers\CategoryController::class, 'edit'])->name('category.edit');
+  Route::patch('/category/update/{id}', [Controllers\CategoryController::class, 'update'])->name('category.update');
+  Route::delete('/category/{id}', [Controllers\CategoryController::class,'destroy'])->name('category.destroy');
+
+  // Buku
+  Route::get('/book', [Controllers\BukuController::class, 'index'])->name('book.index');
+  Route::get('/book/create', [Controllers\BukuController::class, 'create'])->name('book.create');
+  Route::post('/book/store', [Controllers\BukuController::class,'store'])->name('book.store');
+  Route::post('/book/edit/{id}', [Controllers\BukuController::class, 'edit'])->name('book.edit');
+  Route::patch('/book/update/{id}', [Controllers\BukuController::class, 'update'])->name('book.update');
+  Route::delete('/book/{id}', [Controllers\BukuController::class,'destroy'])->name('book.destroy');
 
   // API BMKG
   Route::get('/gempa', [Controllers\ApiController::class, 'gempa']);
@@ -72,6 +86,7 @@ Route::prefix('messages')->middleware('auth')->group(function () {
     Route::get('/{message_id}/edit_draft', [Controllers\MessageController::class, 'editDraft'])->name('messages.edit_draft');
     Route::put('/{message_id}/update_draft', [Controllers\MessageController::class, 'updateDraft'])->name('messages.update_draft');
 });
+
 Route::get('/email/sent', [Controllers\MessageController::class, 'sent'])->name('messages.sent');
 Route::get('email/draft', [Controllers\MessageController::class, 'indexDraft'])->name('messages.draft');
 Route::get('/download/document/{file}', [Controllers\MessageController::class, 'downloadDocument'])->name('download.document')->middleware('auth');
