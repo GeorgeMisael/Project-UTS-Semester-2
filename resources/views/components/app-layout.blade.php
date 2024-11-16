@@ -149,11 +149,12 @@
       });
       </script>
 
+{{-- datatable --}}
+
     <script>
       let  table= new DataTable('#myTable');
     </script>
     
-    {{-- datatable --}}
     <script>
       $(document).ready(function() {
         // Inisialisasi DataTables dengan pengaturan gaya agar tetap memakai SkyDash UI
