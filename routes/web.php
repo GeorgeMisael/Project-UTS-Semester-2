@@ -89,4 +89,3 @@ Route::prefix('messages')->middleware('auth')->group(function () {
 Route::get('/email/sent', [Controllers\MessageController::class, 'sent'])->name('messages.sent');
 Route::get('email/draft', [Controllers\MessageController::class, 'indexDraft'])->name('messages.draft');
 Route::get('/download/document/{file}', [Controllers\MessageController::class, 'downloadDocument'])->name('download.document')->middleware('auth');
-

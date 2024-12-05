@@ -7,7 +7,6 @@
 
   <form action="{{ route('menu.update', $menu->id) }}" method="post" class="forms-sample">
     @csrf
-    
     <div class="form-group row">
       <label for="judul" class="col-sm-3 col-form-label">Judul</label>
       <div class="col-sm-9">
@@ -29,7 +28,6 @@
       </div>
     </div>
     
-
     <x-button type="submit">Submit</x-button>
     <a href="/menu" class="btn btn-light ">Cancel</a>
   </form>
